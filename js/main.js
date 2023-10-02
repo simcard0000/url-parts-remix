@@ -1,5 +1,7 @@
 /* Copyright 2023 Google LLC.
-SPDX-License-Identifier: Apache-2.0 */ 
+SPDX-License-Identifier: Apache-2.0 */
+
+// Public Suffix List: https://publicsuffix.org/list/
 
 // Public Suffix List: https://publicsuffix.org/list/
 import pslEntries from './psl.js';
@@ -23,7 +25,7 @@ if (urlParam) {
 handleUrl();
 
 function handleUrl() {
-  let urlText = urlInput.value;
+  const urlText = urlInput.value;
   // console.log('urlText:', urlText);
 
   // Begin by removing `?url= ...` search string.
@@ -59,8 +61,8 @@ function handleUrl() {
     // Hack to allow URLs without scheme.
     url = urlText.match(/^https?:\/\//) ? new URL(urlText) :
       new URL(`https://${urlText}`);
-  } catch {
-    console.log(`${urlText} is not a valid URL`);
+  } catch (error) {
+    console.log(`${urlText} is not a valid URL`, error);
     urlPartsDiv.innerHTML = 'Not a valid URL.';
     return;
   }
@@ -116,10 +118,9 @@ function handleUrl() {
     urlPartsDiv.innerHTML = 'Scheme format not valid.';
     return;
   }
-  
-  let etldRegExp;
-  // Get the eTLD: this is the longest entry in the PSL 
-  // Note that the PSL includes single-part entries (com, au, etc.) 
+
+  // Get the eTLD: this is the longest entry in the PSL
+  // Note that the PSL includes single-part entries (com, au, etc.)
   // as well as multi-part entries (currently up to five parts).
   // All assigned TLDs in the Root Zone Database are in the PSL.
   let etld = '';
@@ -132,19 +133,18 @@ function handleUrl() {
       etld = pslEntry;
     }
   }
-  
+
   if (!etld) {
-    urlPartsDiv.innerHTML = `No eTLD from the <a href="https://publicsuffix.org/">Public Suffix List</a> found in hostname <span id="input-hostname">${hostname}</span>.`;
+    replace(`No eTLD from the <a href="https://publicsuffix.org/">Public Suffix List</a>` +
+        ` found in hostname <span id="input-hostname">${hostname}</span>.`);
     return;
   }
 
   const etld1 = hostname.match(`[^\/\.]+\.${etld}`)[0];
-  // console.log('etld1: ', etld1);
-
 
   // The spans need to wrap the URL from the outside in:
   // origin > originWithoutPort > hostname > site > eTLD+1 > eTLD > TLD.
-  
+
   urlPartsDiv.innerHTML = urlText.
     replace(origin, `<span id="origin">${origin}</span>`);
 
@@ -161,23 +161,21 @@ function handleUrl() {
   urlPartsDiv.innerHTML =
     urlPartsDiv.innerHTML.replace(hostname, `<span id="hostname">${hostname}</span>`);
 
-  urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(etld1,
+  replace(etld1,
     `<span id="etld1">${etld1}</span>`);
-    
 
-  // Site now requires scheme according to the URL standard, 
+  // Site now requires scheme according to the URL standard,
   // so a dotted line is added between the scheme and the other parts of site (see above).
   if (scheme) {
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(`<span id="etld1">${etld1}</span>`,
+    replace(`<span id="etld1">${etld1}</span>`,
       `<span id="etld1"><span id="site">${etld1}</span></span>`);
-        const site = hostname.split('.').slice(-2).join('.');
-    // urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(site, `<span id="site">${site}</span>`);
-
+    const site = hostname.split('.').slice(-2).join('.');
+    replace(site, `<span id="site">${site}</span>`);
   }
-    
-  urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(etld,
+
+  replace(etld,
     `<span id="etld">${etld}</span>`);
-  
+
   // Wrap TLD in a span.
   // If the hostname includes an eTLD, urlPartsDiv.innerHTML will be wrapped in a span.
   // Otherwise, the whole hostname will be wrapped in a span.
@@ -188,8 +186,9 @@ function handleUrl() {
   if (tldEntries.includes(tld.toUpperCase())) {
     // The TLD is the last part of span#etld
     log();
-    const tldRegExp = new RegExp(`(<span id="etld">.*)(${tld})(</span>)`);
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp, '$1<span id="tld">$2<span>$3');
+    const tldRegExp = new RegExp(`(<span id="etld">.*)(${tld})</span>`);
+    replace(tldRegExp, '$1<span id="tld">$2</span>');
+    log();
   } else {
     urlPartsDiv.innerHTML = 'TLD not found in the ' +
       '<a href="https://www.iana.org/domains/root/db">Root Zone Database</a>.';
@@ -199,34 +198,34 @@ function handleUrl() {
   // Hack: if the pathname is / then highlight the / after the origin
   // (not a / after the scheme).
   if (pathname === '/') {
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(/\/$/,
+    replace(/\/$/,
       `<span id="pathname">/</span>`);
   } else if (pathname) {
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(pathname,
+    replace(pathname,
       `<span id="pathname">${pathname}</span>`);
   }
 
   if (filename) {
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(filename,
+    replace(filename,
       `<span id="filename">${filename}</span>`);
   }
   if (hash) {
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(hash,
+    replace(hash,
       `<span id="hash">${hash}</span>`);
   }
 
-  // TODO: surprisingly complex to get this to work with other URL parts!
-  // if (password) {
-  //   urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(`:${password}@`,
-  //     `:<span id="password">${password}</span>@`);
-  // }
+  // // TODO: surprisingly complex to get this to work with other URL parts!
+  // // if (password) {
+  // replace(`:${password}@`,
+  // //     `:<span id="password">${password}</span>@`);
+  // // }
 
   if (port) {
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(`:${port}`,
+    replace(`:${port}`,
       `:<span id="port">${port}</span>`);
   }
   if (scheme) {
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(scheme,
+    replace(scheme,
       // `<span id="scheme">${scheme}</span>`);
       `<span id="scheme"><span id="origin-scheme"><span id="site-scheme">` +
           `${scheme}</span></span></span>`);
@@ -234,21 +233,18 @@ function handleUrl() {
   // If the URL has a hash value *and* a search string,
   // the URL API (for hash) returns the hash and the search string.
   if (search) {
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(search,
+    replace(search,
       `<span id="search">${search}</span>`);
   }
-  
-  // For debugging
-  
-  function log(label) {
-    console.log(label, urlPartsDiv.innerHTML);
-  }
+}
 
-  // TODO: surprisingly complex to get this to work with other URL parts!
-  // if (username) {
-  //   const usernameRegExp = new RegExp(`${username}([@:])`);
-  //   urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(usernameRegExp,
-  //     `<span id="username">${username}</span>$1`);
-  // }
-};
 
+// Utility functions
+
+function log(label) {
+  console.log(label, urlPartsDiv.innerHTML);
+}
+
+function replace(pattern, replacement) {
+  urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(pattern, replacement);
+}
