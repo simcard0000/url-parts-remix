@@ -130,14 +130,20 @@ function handleUrl() {
       etld = pslEntry;
     }
   }
+  
+    if (!etld) {
+    urlPartsDiv.innerHTML = `No etld found in hostname ${hostname}.`;
+    return;
+  }
+  
 
-  console.log('etld: ', etld);
+
+  console.log('etld:', etld);
   
   // const etld = pslEntries.find((el) => {
   //   etldRegExp = new RegExp(`\\w+.${el}$`);
   //   return hostname.match(etldRegExp);
   // });
-  console.log('etld:', etld);
 
   let etld1;
   const etld1RegExp = new RegExp(`[^\/\.]+\.${etld}`);
@@ -163,7 +169,7 @@ function handleUrl() {
     urlPartsDiv.innerHTML.replace(hostname, `<span id="hostname">${hostname}</span>`);
 
   // Although the URL standard now mandates that a site must include a scheme,
-  // span#site only wraps the eTLD+1 or TLD+1.
+  // span#site only wraps the eTLD+1.
   // The scheme border is connected with the span#site border by a dotted border,
   // by wrapping the whole origin (except the port) in span#site-dotted.
 
@@ -189,14 +195,14 @@ function handleUrl() {
   // If the hostname includes an eTLD, urlPartsDiv.innerHTML will be wrapped in a span.
   // Otherwise, the whole hostname will be wrapped in a span.
   const tld = hostname.split('.').pop();
-  console.log('tld');
+  console.log('tld:', tld);
   // Check if tld is in the list at js/tld.js from the Root Zone Database.
   if (tldEntries.includes(tld.toUpperCase())) {
     const partBeforeTld = hostname.split('.').slice(-2, -1);
     const tldRegExp = new RegExp(`${partBeforeTld}.(${tld})`);
-    console.log(tldRegExp);
-    console.log(urlPartsDiv.innerHTML);
-    console.log(urlPartsDiv.innerHTML.match(tldRegExp));
+    // console.log(tldRegExp);
+    // console.log(urlPartsDiv.innerHTML);
+    // console.log(urlPartsDiv.innerHTML.match(tldRegExp));
     urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp,
       partBeforeTld + '.<span id="tld">$1</span>');
     console.log(partBeforeTld + '.<span id="tld">$1</span>');
