@@ -1,5 +1,5 @@
 /* Copyright 2023 Google LLC.
-SPDX-License-Identifier: Apache-2.0 */
+SPDX-License-Identifier: Apache-2.0 */ 
 
 // Public Suffix List: https://publicsuffix.org/list/
 import pslEntries from './psl.js';
@@ -167,8 +167,8 @@ function handleUrl() {
   urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(etld1,
     `<span id="etld1">${etld1}</span>`);
 
-  // Site now requires scheme (according to the URL standard — see above).
-  // A dotted line is added
+  // Site now requires scheme according to the URL standard, 
+  // so a dotted line is added between the scheme and the other parts of site (see above).
   if (scheme) {
     urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(`<span id="etld1">${etld1}</span>`,
       `<span id="etld1"><span id="site">${etld1}</span></span>`);
@@ -184,7 +184,9 @@ function handleUrl() {
   // Otherwise, the whole hostname will be wrapped in a span.
   const tld = hostname.split('.').pop();
   console.log('tld:', tld);
-  // Check if tld is in the list at js/tld.js from the Root Zone Database.
+
+  // Double check that tld is in the list at js/tld.js from the Root Zone Database.
+  // All TLDs should also be in the PSL (checked earlier) so  at this point the tld should always be valid.
   if (tldEntries.includes(tld.toUpperCase())) {
     const partBeforeTld = hostname.split('.').slice(-2, -1);
     const tldRegExp = new RegExp(`${partBeforeTld}.(${tld})`);
