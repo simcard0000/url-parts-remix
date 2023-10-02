@@ -61,7 +61,7 @@ function handleUrl() {
       new URL(`https://${urlText}`);
   } catch {
     console.log(`${urlText} is not a valid URL`);
-    urlPartsDiv.innerHTML = '';
+    urlPartsDiv.innerHTML = 'Not a valid URL.';
     return;
   }
 
@@ -145,6 +145,8 @@ function handleUrl() {
   // The spans need to wrap the URL from the outside in:
   // origin > originWithoutPort > hostname > site > eTLD+1 > eTLD > TLD.
   
+  console.log('origin:', origin);
+  
   urlPartsDiv.innerHTML = urlText.
     replace(origin, `<span id="origin">${origin}</span>`);
 
@@ -175,23 +177,23 @@ function handleUrl() {
     
   urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(etld,
     `<span id="etld">${etld}</span>`);
-  console.log('urlPartsDiv.innerHTML after:', urlPartsDiv.innerHTML);
+  // console.log('urlPartsDiv.innerHTML after:', urlPartsDiv.innerHTML);
   
   // Wrap TLD in a span.
   // If the hostname includes an eTLD, urlPartsDiv.innerHTML will be wrapped in a span.
   // Otherwise, the whole hostname will be wrapped in a span.
   const tld = hostname.split('.').pop();
-  console.log('tld:', tld);
+  // console.log('tld:', tld);
 
   // Double check that tld is in the list at js/tld.js from the Root Zone Database.
   // All TLDs should also be in the PSL (checked earlier) so at this point the tld should always be valid.
   if (tldEntries.includes(tld.toUpperCase())) {
-    console.log('urlPartsDiv.innerHTML:', urlPartsDiv.innerHTML);
+    // console.log('urlPartsDiv.innerHTML:', urlPartsDiv.innerHTML);
     // The TLD is the last part of span#etld
     const tldRegExp = new RegExp(`(<span id="etld">.*)(${tld})(</span>)`);
-    console.log('tldRegExp:', tldRegExp);
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp, '$1$2$3');
-    console.log('urlPartsDiv.innerHTML', urlPartsDiv.innerHTML);
+    // console.log('tldRegExp:', tldRegExp);
+    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp, '$1<span id="tld">$2<span>$3');
+    // console.log('urlPartsDiv.innerHTML', urlPartsDiv.innerHTML);
   } else {
     urlPartsDiv.innerHTML = 'TLD not found in the ' +
       '<a href="https://www.iana.org/domains/root/db">Root Zone Database</a>.';
