@@ -141,8 +141,8 @@ function handleUrl() {
   const etld1 = hostname.match(`[^\/\.]+\.${etld}`)[0];
   
   
-  console.log('etld:', etld);
-  console.log('etld1: ', etld1);
+  // console.log('etld:', etld);
+  // console.log('etld1: ', etld1);
 
 
   // The spans need to wrap the URL from the outside in:
@@ -186,16 +186,14 @@ function handleUrl() {
   console.log('tld:', tld);
 
   // Double check that tld is in the list at js/tld.js from the Root Zone Database.
-  // All TLDs should also be in the PSL (checked earlier) so  at this point the tld should always be valid.
+  // All TLDs should also be in the PSL (checked earlier) so at this point the tld should always be valid.
   if (tldEntries.includes(tld.toUpperCase())) {
-    const partBeforeTld = hostname.split('.').slice(-2, -1);
-    const tldRegExp = new RegExp(`${partBeforeTld}.(${tld})`);
-    // console.log(tldRegExp);
-    // console.log(urlPartsDiv.innerHTML);
-    // console.log(urlPartsDiv.innerHTML.match(tldRegExp));
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp,
-      partBeforeTld + '.<span id="tld">$1</span>');
-    console.log(partBeforeTld + '.<span id="tld">$1</span>');
+    console.log('urlPartsDiv.innerHTML:', urlPartsDiv.innerHTML);
+    // The TLD is the last part of span#etld
+    const tldRegExp = new RegExp(`<span id="etld">.*(${tld})</span>`);
+    console.log('tldRegExp:', tldRegExp);
+    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp, '<span id="tld">$1</span>');
+    console.log('urlPartsDiv.innerHTML', urlPartsDiv.innerHTML);
   } else {
     urlPartsDiv.innerHTML = 'TLD not found in the ' +
       '<a href="https://www.iana.org/domains/root/db">Root Zone Database</a>.';
