@@ -132,7 +132,7 @@ function handleUrl() {
   }
   
     if (!etld) {
-    urlPartsDiv.innerHTML = `No etld found in hostname ${hostname}.`;
+    urlPartsDiv.innerHTML = `No eTLD from the <a href=>Public Suffix List</a> found in hostname ${hostname}.`;
     return;
   }
   
