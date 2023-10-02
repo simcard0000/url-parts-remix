@@ -139,15 +139,12 @@ function handleUrl() {
   }
 
   const etld1 = hostname.match(`[^\/\.]+\.${etld}`)[0];
-  
-  
-  // console.log('etld:', etld);
   // console.log('etld1: ', etld1);
 
 
   // The spans need to wrap the URL from the outside in:
   // origin > originWithoutPort > hostname > site > eTLD+1 > eTLD > TLD.
-
+  
   urlPartsDiv.innerHTML = urlText.
     replace(origin, `<span id="origin">${origin}</span>`);
 
@@ -173,11 +170,12 @@ function handleUrl() {
     urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(`<span id="etld1">${etld1}</span>`,
       `<span id="etld1"><span id="site">${etld1}</span></span>`);
         const site = hostname.split('.').slice(-2).join('.');
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(site, `<span id="site">${site}</span>`);
-
+    // urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(site, `<span id="site">${site}</span>`);
   }
+    
   urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(etld,
     `<span id="etld">${etld}</span>`);
+  console.log('urlPartsDiv.innerHTML after:', urlPartsDiv.innerHTML);
   
   // Wrap TLD in a span.
   // If the hostname includes an eTLD, urlPartsDiv.innerHTML will be wrapped in a span.
@@ -190,9 +188,9 @@ function handleUrl() {
   if (tldEntries.includes(tld.toUpperCase())) {
     console.log('urlPartsDiv.innerHTML:', urlPartsDiv.innerHTML);
     // The TLD is the last part of span#etld
-    const tldRegExp = new RegExp(`<span id="etld">.*(${tld})</span>`);
-    console.log('tldRegExp:', tldRegExp);
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp, '<span id="tld">$1</span>');
+    const tldRegExp = new RegExp(`(<span id="etld">.*)(${tld})(</span>)`);
+    // console.log('tldRegExp:', tldRegExp);
+    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp, '$1$2$3');
     console.log('urlPartsDiv.innerHTML', urlPartsDiv.innerHTML);
   } else {
     urlPartsDiv.innerHTML = 'TLD not found in the ' +
