@@ -116,20 +116,20 @@ function handleUrl() {
     urlPartsDiv.innerHTML = 'Scheme format not valid.';
     return;
   }
-
+  
   let etldRegExp;
   // Get the eTLD and eTLD+1.
+  // Note that the PSL includes single-part entries (com, au, etc.) 
+  // as well as multi-part entries (currently up to five parts)
   const etld = pslEntries.find((el) => {
     etldRegExp = new RegExp(`\\w+.${el}$`);
-    // if (el === 'co.uk') {
-    // }
     return hostname.match(etldRegExp);
   });
+  console.log('etld:', etld);
+
   let etld1;
-  if (etld) {
-    const etld1RegExp = new RegExp(`[^\/\.]+\.${etld}`);
-    etld1 = urlText.match(etld1RegExp) && urlText.match(etld1RegExp)[0];
-  }
+  const etld1RegExp = new RegExp(`[^\/\.]+\.${etld}`);
+
 
   // The spans need to wrap the URL from the outside in:
   // origin > originWithoutPort > hostname > site > eTLD+1 > eTLD > TLD.
