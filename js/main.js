@@ -189,7 +189,7 @@ function handleUrl() {
     console.log('urlPartsDiv.innerHTML:', urlPartsDiv.innerHTML);
     // The TLD is the last part of span#etld
     const tldRegExp = new RegExp(`(<span id="etld">.*)(${tld})(</span>)`);
-    // console.log('tldRegExp:', tldRegExp);
+    console.log('tldRegExp:', tldRegExp);
     urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp, '$1$2$3');
     console.log('urlPartsDiv.innerHTML', urlPartsDiv.innerHTML);
   } else {
