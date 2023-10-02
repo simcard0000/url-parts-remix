@@ -145,8 +145,6 @@ function handleUrl() {
   // The spans need to wrap the URL from the outside in:
   // origin > originWithoutPort > hostname > site > eTLD+1 > eTLD > TLD.
   
-  console.log('origin:', origin);
-  
   urlPartsDiv.innerHTML = urlText.
     replace(origin, `<span id="origin">${origin}</span>`);
 
@@ -165,6 +163,7 @@ function handleUrl() {
 
   urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(etld1,
     `<span id="etld1">${etld1}</span>`);
+    log('with etld1');
 
   // Site now requires scheme according to the URL standard, 
   // so a dotted line is added between the scheme and the other parts of site (see above).
@@ -240,6 +239,12 @@ function handleUrl() {
   if (search) {
     urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(search,
       `<span id="search">${search}</span>`);
+  }
+  
+  // For debugging
+  
+  function log(label) {
+    console.log(label, urlPartsDiv.innerHTML);
   }
 
   // TODO: surprisingly complex to get this to work with other URL parts!
