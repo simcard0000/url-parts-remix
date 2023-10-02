@@ -128,13 +128,13 @@ function handleUrl() {
     // Check for match at end of hostname only.
     // Need to add \\. to avoid accepting hostnames that end in a valid (e)TLD, such as 'web.xcom'.
     const pslEntryRegExp = new RegExp(`\\.${pslEntry.replaceAll('.', '\.')}$`);
-    if (pslEntry === 'com.au') {
+    if (pslEntry === 'github.io') {
       console.log(pslEntryRegExp);
     }
     // Find the longest eTLD in the PSL that matches the hostname (e.g. 'co.uk' rather than just 'co').
     if (hostname.match(pslEntryRegExp) && pslEntry.length > etld.length) {
       etld = pslEntry;
-      console.log(hostname,etld);
+      console.log(etld);
     }
   }
 
@@ -179,7 +179,7 @@ function handleUrl() {
     replace(`<span id="etld1">${etld1}</span>`,
       `<span id="etld1"><span id="site">${etld1}</span></span>`);
     const site = hostname.split('.').slice(-2).join('.');
-    replace(site, `<span id="site">${site}</span>`);
+    // replace(site, `<span id="site">${site}</span>`);
   }
 
   replace(etld,
