@@ -180,10 +180,13 @@ function handleUrl() {
   // Check if tld is in the list at js/tld.js from the Root Zone Database.
   if (tldEntries.includes(tld.toUpperCase())) {
     const partBeforeTld = hostname.split('.').slice(-2, -1);
-  console.log(partBeforeTld);
     const tldRegExp = new RegExp(`${partBeforeTld}.(${tld})`);
+    console.log(tldRegExp);
+    console.log(urlPartsDiv.innerHTML);
+    console.log(urlPartsDiv.innerHTML.match(tldRegExp));
     urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(tldRegExp,
       partBeforeTld + '.<span id="tld">$1</span>');
+    console.log(partBeforeTld + '.<span id="tld">$1</span>');
   } else {
     urlPartsDiv.innerHTML = 'TLD not found in the ' +
       '<a href="https://www.iana.org/domains/root/db">Root Zone Database</a>.';
