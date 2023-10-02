@@ -120,10 +120,12 @@ function handleUrl() {
   let etldRegExp;
   // Get the eTLD: this is the longest entry in the PSL 
   // Note that the PSL includes single-part entries (com, au, etc.) 
-  // as well as multi-part entries (currently up to five parts)
+  // as well as multi-part entries (currently up to five parts).
+  // All assigned TLDs in the Root Zone Database are in the PSL.
   let etld = '';
   for (const pslEntry of pslEntries) {
     // Check for match at end of hostname only.
+    // Need to add \\. to avoid accepting hostnames that end in a valid (e)TLD, such as 'web.xcom'.
     const pslEntryRegExp = new RegExp(`\\.${pslEntry.replaceAll('.', '\.')}$`);
     // Find the longest eTLD in the PSL that matches the hostname (e.g. 'co.uk' rather than just 'co').
     if (hostname.match(pslEntryRegExp) && pslEntry.length > etld.length) {
@@ -131,14 +133,16 @@ function handleUrl() {
     }
   }
   
-    if (!etld) {
+  if (!etld) {
     urlPartsDiv.innerHTML = `No eTLD from the <a href="https://publicsuffix.org/">Public Suffix List</a> found in hostname <span id="input-hostname">${hostname}</span>.`;
     return;
   }
 
-  console.log('etld:', etld);
+  const etld1 = hostname.match(`[^\/\.]+\.${etld}`)[0];
   
-  const etld1 = hostname.match(`[^\/\.]+\.${etld}`);
+  
+  console.log('etld:', etld);
+  console.log('etld1: ', etld1);
 
 
   // The spans need to wrap the URL from the outside in:
