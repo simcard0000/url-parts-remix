@@ -128,9 +128,13 @@ function handleUrl() {
     // Check for match at end of hostname only.
     // Need to add \\. to avoid accepting hostnames that end in a valid (e)TLD, such as 'web.xcom'.
     const pslEntryRegExp = new RegExp(`\\.${pslEntry.replaceAll('.', '\.')}$`);
+    if (pslEntry === 'com.au') {
+      console.log(pslEntryRegExp);
+    }
     // Find the longest eTLD in the PSL that matches the hostname (e.g. 'co.uk' rather than just 'co').
     if (hostname.match(pslEntryRegExp) && pslEntry.length > etld.length) {
       etld = pslEntry;
+      console.log(hostname,etld);
     }
   }
 
@@ -141,6 +145,11 @@ function handleUrl() {
   }
 
   const etld1 = hostname.match(`[^\/\.]+\.${etld}`)[0];
+  
+  if (!etld1) {
+    replace(`eTLD ${etld} specified, but no eTLD+1.`)
+  }
+
 
   // The spans need to wrap the URL from the outside in:
   // origin > originWithoutPort > hostname > site > eTLD+1 > eTLD > TLD.
@@ -185,10 +194,8 @@ function handleUrl() {
   // All TLDs should also be in the PSL (checked earlier) so at this point the tld should always be valid.
   if (tldEntries.includes(tld.toUpperCase())) {
     // The TLD is the last part of span#etld
-    log();
-    const tldRegExp = new RegExp(`(<span id="etld">.*)(${tld})</span>`);
+    const tldRegExp = new RegExp(`(<span id="etld">[^<]*)(${tld})`);
     replace(tldRegExp, '$1<span id="tld">$2</span>');
-    log();
   } else {
     urlPartsDiv.innerHTML = 'TLD not found in the ' +
       '<a href="https://www.iana.org/domains/root/db">Root Zone Database</a>.';
