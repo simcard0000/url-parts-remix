@@ -118,13 +118,25 @@ function handleUrl() {
   }
   
   let etldRegExp;
-  // Get the eTLD and eTLD+1.
+  // Get the eTLD: this is the longest entry in the PSL 
   // Note that the PSL includes single-part entries (com, au, etc.) 
   // as well as multi-part entries (currently up to five parts)
-  const etld = pslEntries.find((el) => {
-    etldRegExp = new RegExp(`\\w+.${el}$`);
-    return hostname.match(etldRegExp);
-  });
+  let etld = '';
+  for (const pslEntry of pslEntries) {
+    // Check for match at end of hostname only.
+    const pslEntryRegExp = new RegExp(`${pslEntry.replaceAll('.', '\.')}$`);
+    // Find the longest eTLD in the PSL that matches the hostname (e.g. 'co.uk' rather than just 'co').
+    if (hostname.match(pslEntryRegExp) && pslEntry.length > etld.length) {
+      etld = pslEntry;
+    }
+  }
+
+  console.log('etld: ', etld);
+  
+  // const etld = pslEntries.find((el) => {
+  //   etldRegExp = new RegExp(`\\w+.${el}$`);
+  //   return hostname.match(etldRegExp);
+  // });
   console.log('etld:', etld);
 
   let etld1;
