@@ -151,30 +151,24 @@ function handleUrl() {
   urlPartsDiv.innerHTML = urlText.
     replace(origin, `<span id="origin">${origin}</span>`);
 
+  // Although the URL standard now mandates that a site must include a scheme,
+  // span#site only wraps the eTLD+1.
+  // The scheme border is connected with the span#site border by a dotted border,
+  // by wrapping the whole origin (except the port) in span#site-dotted.
   if (scheme) {
     const siteDottedRegExp = new RegExp(`${scheme}.+${hostname}`);
     urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.
       replace(siteDottedRegExp, '<span id="site-dotted">$&</span>');
   }
 
-  // Although the URL standard now mandates that a site must include a scheme,
-  // span#site only wraps the eTLD+1.
-  // The scheme border is connected with the span#site border by a dotted border,
-  // by wrapping the whole origin (except the port) in span#site-dotted.
-
-
-  // According to the URL standard, site must now include a scheme, so add a
-  // dotted border between the TLD+1 or eTLD+1 and the scheme.
-
-  
-  // If the URL has a scheme, add a span to add a dashed border for site
-  // between the scheme and the rest of the site.
-  urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(etld1,
-    `<span id="etld1">${etld1}</span>`);
   urlPartsDiv.innerHTML =
     urlPartsDiv.innerHTML.replace(hostname, `<span id="hostname">${hostname}</span>`);
 
-  // Site now requires scheme (according to the URL standard).
+  urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(etld1,
+    `<span id="etld1">${etld1}</span>`);
+
+  // Site now requires scheme (according to the URL standard — see above).
+  // A dotted line is added
   if (scheme) {
     urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(`<span id="etld1">${etld1}</span>`,
       `<span id="etld1"><span id="site">${etld1}</span></span>`);
@@ -184,7 +178,6 @@ function handleUrl() {
   }
   urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.replace(etld,
     `<span id="etld">${etld}</span>`);
-  // Site now requires scheme.
   
   // Wrap TLD in a span.
   // If the hostname includes an eTLD, urlPartsDiv.innerHTML will be wrapped in a span.
