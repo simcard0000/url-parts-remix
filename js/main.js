@@ -125,16 +125,18 @@ function handleUrl() {
   // All assigned TLDs in the Root Zone Database are in the PSL.
   let etld = '';
   for (const pslEntry of pslEntries) {
+    if (hostname === pslEntry) {
+      replace('', `Hostname ${hostname} is the same as a ` +
+        `<a href="https://publicsuffix.org/">Public Suffix List</a> entry, ` +
+        `therefore this is not a valid URL.`);
+      return;
+    }
     // Check for match at end of hostname only.
     // Need to add \\. to avoid accepting hostnames that end in a valid (e)TLD, such as 'web.xcom'.
     const pslEntryRegExp = new RegExp(`\\.${pslEntry.replaceAll('.', '\.')}$`);
-    if (pslEntry === 'github.io') {
-      console.log(pslEntryRegExp);
-    }
     // Find the longest eTLD in the PSL that matches the hostname (e.g. 'co.uk' rather than just 'co').
     if (hostname.match(pslEntryRegExp) && pslEntry.length > etld.length) {
       etld = pslEntry;
-      console.log(etld);
     }
   }
 
