@@ -189,6 +189,7 @@ function handleUrl() {
   // If the hostname includes an eTLD, urlPartsDiv.innerHTML will be wrapped in a span.
   // Otherwise, the whole hostname will be wrapped in a span.
   const tld = hostname.split('.').pop();
+  console.log('tld');
   // Check if tld is in the list at js/tld.js from the Root Zone Database.
   if (tldEntries.includes(tld.toUpperCase())) {
     const partBeforeTld = hostname.split('.').slice(-2, -1);
