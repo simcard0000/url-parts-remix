@@ -124,7 +124,7 @@ function handleUrl() {
   let etld = '';
   for (const pslEntry of pslEntries) {
     // Check for match at end of hostname only.
-    const pslEntryRegExp = new RegExp(`${pslEntry.replaceAll('.', '\.')}$`);
+    const pslEntryRegExp = new RegExp(`\\.${pslEntry.replaceAll('.', '\.')}$`);
     // Find the longest eTLD in the PSL that matches the hostname (e.g. 'co.uk' rather than just 'co').
     if (hostname.match(pslEntryRegExp) && pslEntry.length > etld.length) {
       etld = pslEntry;
@@ -132,21 +132,13 @@ function handleUrl() {
   }
   
     if (!etld) {
-    urlPartsDiv.innerHTML = `No eTLD from the <a href=>Public Suffix List</a> found in hostname ${hostname}.`;
+    urlPartsDiv.innerHTML = `No eTLD from the <a href="https://publicsuffix.org/">Public Suffix List</a> found in hostname <span id="input-hostname">${hostname}</span>.`;
     return;
   }
-  
-
 
   console.log('etld:', etld);
   
-  // const etld = pslEntries.find((el) => {
-  //   etldRegExp = new RegExp(`\\w+.${el}$`);
-  //   return hostname.match(etldRegExp);
-  // });
-
-  let etld1;
-  const etld1RegExp = new RegExp(`[^\/\.]+\.${etld}`);
+  const etld1 = hostname.match(`[^\/\.]+\.${etld}`);
 
 
   // The spans need to wrap the URL from the outside in:

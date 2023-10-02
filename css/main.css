@@ -176,6 +176,10 @@ div#url-parts span::before {
   width: 0;
 }
 
+div#url-parts span#input-hostname {
+  color: red;
+}
+
 span#etld {
   border-bottom: 1px solid #ea4335;
   padding: 0 0 30px 0;
