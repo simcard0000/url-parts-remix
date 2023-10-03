@@ -123,13 +123,16 @@ function handleUrl() {
   // Note that the PSL includes single-part entries (com, au, etc.)
   // as well as multi-part entries (currently up to five parts).
   // All assigned TLDs in the Root Zone Database are in the PSL.
+  
   let etld = '';
   for (const pslEntry of pslEntries) {
+    // Hostname is not valid if it matches a PSL entry.
     if (hostname === pslEntry) {
       urlPartsDiv.innerHTML = `Not a valid URL: hostname <span id="input-hostname">${hostname}</span> is an ` +
         `eTLD (see the <a href="https://publicsuffix.org/">Public Suffix List</a>).`;
       return;
     }
+  
     // Check for match at end of hostname only.
     // Need to add \\. to avoid accepting hostnames that end in a valid (e)TLD, such as 'web.xcom'.
     const pslEntryRegExp = new RegExp(`\\.${pslEntry.replaceAll('.', '\.')}$`);
@@ -138,10 +141,12 @@ function handleUrl() {
       etld = pslEntry;
     }
   }
+  
+  console.log('etld', etld);
 
   if (!etld) {
-    replace(`No eTLD from the <a href="https://publicsuffix.org/">Public Suffix List</a>` +
-        ` found in hostname <span id="input-hostname">${hostname}</span>.`);
+    urlPartsDiv.innerHTML = `No eTLD from the <a href="https://publicsuffix.org/">Public Suffix List</a>` +
+      ` found in hostname <span id="input-hostname">${hostname}</span>.`;
     return;
   }
 
