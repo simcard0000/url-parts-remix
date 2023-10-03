@@ -126,9 +126,8 @@ function handleUrl() {
   let etld = '';
   for (const pslEntry of pslEntries) {
     if (hostname === pslEntry) {
-      urlPartsDiv.innerHTML = `Hostname ${hostname} is the same as a ` +
-        `<a href="https://publicsuffix.org/">Public Suffix List</a> entry, ` +
-        `therefore this is not a valid URL.`;
+      urlPartsDiv.innerHTML = `Not a valid URL: hostname <span id="input-hostname">${hostname}</span> is an ` +
+        `eTLD (see the <a href="https://publicsuffix.org/">Public Suffix List</a>).`;
       return;
     }
     // Check for match at end of hostname only.

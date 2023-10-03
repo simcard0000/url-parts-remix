@@ -198,9 +198,11 @@ span#etld1 {
 
 span#etld1::before {
   color: #ea4335;
-  content: 'Registrable domain (aka eTLD+1)';
+  content: 'registrable domain \A(aka eTLD+1)';
   top: 75px;
+  white-space: pre;
 }
+
 
 span#filename {
   border-bottom: 1px solid #fbbc04;
