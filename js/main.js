@@ -14,7 +14,7 @@ import tldEntries from './tld.js';
 const urlInput = document.querySelector('input#url');
 const urlPartsDiv = document.querySelector('div#url-parts');
 
-urlInput.focus();
+urlInput.focus({preventScroll: true});
 
 if (!isSecureContext) location.protocol = 'https:';
 
@@ -133,8 +133,8 @@ function handleUrl() {
   for (const pslEntry of pslEntries) {
     // Hostname is not valid if it matches a PSL entry.
     if (hostname === pslEntry) {
-      urlPartsDiv.innerHTML = `Not a valid URL: hostname <span id="input-hostname">${hostname}</span> is an ` +
-        `eTLD (see the <a href="https://publicsuffix.org/">Public Suffix List</a>).`;
+      urlPartsDiv.innerHTML = `Not a valid URL:hostname <span id="input-hostname">${hostname}</span> is an ` +
+        `eTLD. <br><br>(See the <a href="https://publicsuffix.org/">Public Suffix List</a>.)`;
       return;
     }
   
