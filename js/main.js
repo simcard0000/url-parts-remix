@@ -1,7 +1,10 @@
 /* Copyright 2023 Google LLC.
 SPDX-License-Identifier: Apache-2.0 */
 
-// Public Suffix List: https://publicsuffix.org/list/
+// To improve display when the page is not in an iframe (in an article or blog post or whatever).
+if (window.parent === window) {
+  document.documentElement.classList.add('not-in-iframe');
+}
 
 // Public Suffix List: https://publicsuffix.org/list/
 import pslEntries from './psl.js';

@@ -33,6 +33,12 @@ body {
   word-break: break-word;
 }
 
+/* Class is set in js/main.js. When this page is in an iframe 
+(in an article or blog post), no body margin is required. */
+.not-in-iframe body {
+  margin: 40px;
+}
+
 button {
   background-color: #d84a38;
   border: none;
@@ -113,6 +119,10 @@ h3 {
   margin: 20px 0 10px 0;
   padding: 10px 0 0 0;
   white-space: nowrap;
+}
+
+html {
+  overflow: hidden;
 }
 
 img {
