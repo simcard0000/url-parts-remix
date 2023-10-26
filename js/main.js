@@ -14,6 +14,8 @@ import tldEntries from './tld.js';
 const urlInput = document.querySelector('input#url');
 const urlPartsDiv = document.querySelector('div#url-parts');
 
+urlInput.focus();
+
 if (!isSecureContext) location.protocol = 'https:';
 
 urlInput.oninput = handleUrl;
