@@ -151,7 +151,7 @@ function handleUrl() {
 
   if (!etld) {
     urlPartsDiv.innerHTML = `No eTLD from the <a href="https://publicsuffix.org/">Public Suffix List</a>` +
-      ` found in hostname <span id="input-hostname">${hostname}</span>.`;
+      ` found in <br>hostname <span id="input-hostname">${hostname}</span>.`;
     return;
   }
 
