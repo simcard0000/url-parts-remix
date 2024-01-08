@@ -46,7 +46,7 @@ function handleUrl() {
     return;
   }
 
-  // TODO: support multiple search parameters, username:password, 
+  // TODO: support username:password, 
   // and non-ASCII hostnames and pathnames.
   if (!urlText.match(/^[\w:\/\?#\.\@= %&]+$/i)) {
     urlPartsDiv.innerHTML =
@@ -82,7 +82,7 @@ function handleUrl() {
   const password = url.password;
   let pathname = url.pathname;
   const port = url.port;
-  const search = url.search;
+  const search = url.search.replace('&','&amp;');
   const username = url.username;
 
   if (!hostname) {
@@ -231,7 +231,7 @@ function handleUrl() {
   }
   if (hash) {
     replace(hash,
-      `<span id="hash">${hash}</span>`);
+      `<span id="hash">#<span id="fragment">${hash.slice(1)}</span></span>`);
   }
 
   // // TODO: surprisingly complex to get this to work with other URL parts!
