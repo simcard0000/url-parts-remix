@@ -48,7 +48,7 @@ function handleUrl() {
 
   // TODO: support multiple search parameters, username:password, 
   // and non-ASCII hostnames and pathnames.
-  if (!urlText.match(/^[\w:\/\?#\.\@= %]+$/i)) {
+  if (!urlText.match(/^[\w:\/\?#\.\@= %&]+$/i)) {
     urlPartsDiv.innerHTML =
       '😿 Sorry! Only ASCII for the moment.<br><br>' +
       'We\'re working on supporting multiple search parameters, username:password, <br>' +
@@ -63,8 +63,6 @@ function handleUrl() {
   }
 
   let url;
-  
-  console.log(urlTe);
 
   try {
     // Hack to allow URLs without scheme.
@@ -76,7 +74,7 @@ function handleUrl() {
     return;
   }
 
-  // console.log('url', url);
+  //console.log('url', url);
 
   const hash = url.hash;
   const hostname = url.hostname;
