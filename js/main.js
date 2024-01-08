@@ -46,11 +46,13 @@ function handleUrl() {
     return;
   }
 
-  // TODO: support non-ASCII hostnames and pathnames.
+  // TODO: support multiple search parameters, username:password, 
+  // and non-ASCII hostnames and pathnames.
   if (!urlText.match(/^[\w:\/\?#\.\@= %]+$/i)) {
     urlPartsDiv.innerHTML =
-      '😾 Sorry! Only ASCII for the moment.<br><br>' +
-      'We\'re working on providing <a href="https://github.com/mathiasbynens/punycode.js">' +
+      '😿 Sorry! Only ASCII for the moment.<br><br>' +
+      'We\'re working on supporting multiple search parameters, username:password, <br>' +
+      'and providing <a href="https://github.com/mathiasbynens/punycode.js">' +
       'Punycode</a> support and non-ASCII in pathnames.';
     return;
   }
