@@ -12,7 +12,8 @@ If you find bugs with this demo or would like to suggest changes, please message
 
 * Set up service and cron jobs to maintain [psl.js](https://glitch.com/edit/#!/url-parts?path=js%2Fpsl.js) 
 and [tld.js](https://glitch.com/edit/#!/url-parts?path=js%2Ftld.js).
-* Allow `username:password`.
+* Allow `username:password` and explain in article.
+* Allow multiple search parameters.
 <br><br>
 
 ## Find out more
