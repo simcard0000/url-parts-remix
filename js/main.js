@@ -63,6 +63,8 @@ function handleUrl() {
   }
 
   let url;
+  
+  console.log(urlTe);
 
   try {
     // Hack to allow URLs without scheme.
