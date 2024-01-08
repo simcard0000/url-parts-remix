@@ -82,8 +82,8 @@ function handleUrl() {
   const password = url.password;
   let pathname = url.pathname;
   const port = url.port;
-  const search = url.search;
-  const username = url.username;
+  const search = url.search.replace('&','&amp;');
+  const username = url.username.replace('&','&amp;');
 
   if (!hostname) {
     urlPartsDiv.innerHTML = '';
@@ -168,7 +168,7 @@ function handleUrl() {
   // The spans need to wrap the URL from the outside in:
   // origin > originWithoutPort > hostname > site > eTLD+1 > eTLD > TLD.
 
-  urlPartsDiv.innerHTML = urlText.
+  urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.
     replace(origin, `<span id="origin">${origin}</span>`);
 
   // Although the URL standard now mandates that a site must include a scheme,
