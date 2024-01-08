@@ -226,42 +226,42 @@ span#filename::before {
   top: 25px;
 }
 
-span#fragment {
+span#hash {
   border-bottom: 1px solid #fbbc04;
   margin: 0 0 0 2px;
   padding: 0 0 5px 0;
 }
 
-span#fragment::before {
+span#hash::before {
   color: #fbbc04;
-  content: 'fragment';
+  content: 'hash';
   top: 25px;
 }
 
-span#search + span#fragment {
+span#search + span#hash {
   border-bottom: 1px solid #fbbc04;
   padding: 0 0 30px 0;
 }
 
-span#search + span#fragment::before {
+span#search + span#hash::before {
   color: #fbbc04;
-  content: 'fragment';
+  content: 'hash';
   top: 50px;
 }
 
-span#hash {
+span#fragment {
   border-top: 1px solid #fbbc04;
   margin: 0 0 0 2px;
   padding: 2px 0 0 0;
 }
 
-span#hash::before {
+span#fragment::before {
   color: #fbbc04;
-  content: 'hash';
+  content: 'fragment';
   top: -25px;
 }
 
-span#search + span#hash {
+span#search + span#fragment {
   border-top: 1px solid #fbbc04;
   padding: 0 0 30px 0;
 }
