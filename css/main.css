@@ -226,31 +226,8 @@ span#filename::before {
   top: 25px;
 }
 
-span#hash {
-  border-bottom: 1px solid #fbbc04;
-  margin: 0 0 0 2px;
-  padding: 0 0 5px 0;
-}
-
-span#hash::before {
-  color: #fbbc04;
-  content: 'hash';
-  top: 25px;
-}
-
-span#search + span#hash {
-  border-bottom: 1px solid #fbbc04;
-  padding: 0 0 30px 0;
-}
-
-span#search + span#hash::before {
-  color: #fbbc04;
-  content: 'hash';
-  top: 50px;
-}
-
 span#fragment {
-  border-top: 1px solid #fbbc04;
+  border-bottom: 1px solid #fbbc04;
   margin: 0 0 0 2px;
   padding: 0 0 5px 0;
 }
@@ -258,10 +235,33 @@ span#fragment {
 span#fragment::before {
   color: #fbbc04;
   content: 'fragment';
-  top: -25px;
+  top: 25px;
 }
 
 span#search + span#fragment {
+  border-bottom: 1px solid #fbbc04;
+  padding: 0 0 30px 0;
+}
+
+span#search + span#fragment::before {
+  color: #fbbc04;
+  content: 'fragment';
+  top: 50px;
+}
+
+span#hash {
+  border-top: 1px solid #fbbc04;
+  margin: 0 0 0 2px;
+  padding: 2px 0 0 0;
+}
+
+span#hash::before {
+  color: #fbbc04;
+  content: 'hash';
+  top: -25px;
+}
+
+span#search + span#hash {
   border-top: 1px solid #fbbc04;
   padding: 0 0 30px 0;
 }

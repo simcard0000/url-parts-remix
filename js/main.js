@@ -176,7 +176,6 @@ function handleUrl() {
   // The scheme border is connected with the span#site border by a dotted border,
   // by wrapping the whole origin (except the port) in span#site-dotted.
   if (scheme) {
-    urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.
     const siteDottedRegExp = new RegExp(`${scheme}.+${hostname}`);
     urlPartsDiv.innerHTML = urlPartsDiv.innerHTML.
       replace(siteDottedRegExp, '<span id="site-dotted">$&</span>');
