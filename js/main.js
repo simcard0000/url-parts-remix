@@ -48,7 +48,7 @@ function handleUrl() {
 
   // TODO: support username:password, 
   // and non-ASCII hostnames and pathnames.
-  if (!urlText.match(/^[\w:\/\?#\.\@= %&]+$/i)) {
+  if (!urlText.match(/^[\w:\/\?#\.\@= %&;]+$/i)) {
     urlPartsDiv.innerHTML =
       '😿 Sorry! Only ASCII for the moment.<br><br>' +
       'We\'re working on supporting multiple search parameters, username:password, <br>' +
@@ -82,7 +82,7 @@ function handleUrl() {
   const password = url.password;
   let pathname = url.pathname;
   const port = url.port;
-  const search = url.search.replace('&','&amp;');
+  const search = url.search;
   const username = url.username;
 
   if (!hostname) {
@@ -163,6 +163,7 @@ function handleUrl() {
     replace(`eTLD ${etld} specified, but no eTLD+1.`)
   }
 
+  urlPartsDiv.innerHTML = urlText.replace('&','&amp;');
 
   // The spans need to wrap the URL from the outside in:
   // origin > originWithoutPort > hostname > site > eTLD+1 > eTLD > TLD.
