@@ -135,7 +135,7 @@ input {
   font-family: 'Roboto Mono', monospace;
   font-size: 16px;
   padding: 10px;
-  width: 500px;
+  width: 610px;
 }
 
 label {
@@ -294,7 +294,7 @@ span#origin::before {
 }
 
 span#origin-dotted {
-  border-top: 0.5px dotted #34a853;
+  border-top: 1px dashed #34a853;
   padding: 52px 0 0 0;
 }
 
@@ -397,7 +397,7 @@ span#site::before {
 }
 
 span#site-dotted {
-  border-top: 0.5px dotted #34a853;
+  border-top: 1px dashed #34a853;
   padding: 2px 0 0 0;
 }
 
