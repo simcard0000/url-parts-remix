@@ -248,22 +248,19 @@ function handleUrl() {
     replace(username,
       `<span id="username">${username}</span>`);
     // Special handling for escaped characters
-    replace(username.replaceAll('%40','@'),
-      `<span id="username">${username.replaceAll('%40','@')}</span>`);
-    replace(username.replaceAll('%3A',':'),
-      `<span id="username">${username.replaceAll('%3A',':')}</span>`);
+    if (username.includes('%40') || username.includes('%3A')) {
+      replace(username.replaceAll('%40','@').replaceAll('%3A',':'),
+        `<span id="username">${username.replaceAll('%40','@').replaceAll('%3A',':')}</span>`);
+    }
   }
   
   if (password) {
-    if (password.includes('%40')) {
-      replace(password.replaceAll('%40','@'),
-        `<span id="password">${password.replaceAll('%40','@')}</span>`);
-    } else if (password.includes('%3A')) {
-      replace(password.replaceAll('%3A',':'),
-        `<span id="password">${password.replaceAll('%3A',':')}</span>`);
-    } else {
-      replace(password,
-        `<span id="password">${password}</span>`);
+    replace(password,
+      `<span id="password">${password}</span>`);
+    // // Special handling for escaped characters
+    if (password.includes('%40') || password.includes('%3A')) {
+      replace(password.replaceAll('%40','@').replaceAll('%3A',':'),
+        `<span id="password">${password.replaceAll('%40','@').replaceAll('%3A',':')}</span>`);
     }
   }
 
