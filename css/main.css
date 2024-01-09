@@ -274,23 +274,23 @@ span#fragment::before {
 }
 
 span#hostname {
-  border-top: 1px solid #34a853;
+  border-top: 1px solid #4285f4;
   padding: 2px 0 0 0;
 }
 
 span#hostname::before {
-  color: #34a853;
+  color: #4285f4;
   content: 'hostname';
   top: -25px;
 }
 
 span#origin span#hostname {
-  border-top: 1px solid #34a853;
+  border-top: 1px solid #4285f4;
   padding: 27px 0 0 0;
 }
 
 span#origin span#hostname::before {
-  color: #34a853;
+  color: #4285f4;
   content: 'hostname';
   top: -50px;
 }
