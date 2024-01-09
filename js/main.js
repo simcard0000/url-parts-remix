@@ -79,11 +79,11 @@ function handleUrl() {
   const hash = url.hash.replaceAll('&','&amp;');
   const hostname = url.hostname;
   const origin = url.origin;
-  const password = url.password.replaceAll('@','%40');
+  const password = url.password;
   let pathname = url.pathname;
   const port = url.port;
   const search = url.search.replaceAll('&','&amp;');
-  const username = url.username.replaceAll('@','%40').replace(':','%3A');
+  const username = url.username;
 
   if (!hostname) {
     urlPartsDiv.innerHTML = '';
@@ -261,11 +261,17 @@ function handleUrl() {
   if (username) {
     replace(username,
       `<span id="username">${username}</span>`);
+    replace(username.replace('%40','@'),
+      `<span id="username">${username.replace('%40','@')}</span>`);
   }
   
   if (password) {
     replace(password,
       `<span id="password">${password}</span>`);
+    replace(password.replace('%40','@'),
+      `<span id="password">${password.replace('%40','@')}</span>`);
+    replace(password.replace('%3A',':'),
+      `<span id="password">${password.replace('%3A',':')}</span>`);
   }
 }
 
