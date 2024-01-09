@@ -228,28 +228,28 @@ span#filename::before {
 span#fragment {
   border-bottom: 1px solid #fbbc04;
   margin: 0 0 0 2px;
-  padding: 0 0 55px 0;
+  padding: 0 0 30px 0;
 }
 
 span#fragment::before {
   color: #fbbc04;
   content: 'fragment';
-  top: 74px;
+  top: 50px;
 }
 
 span#hash {
   border-bottom: 1px solid #fbbc04;
   margin: 0 0 0 2px;
-  padding: 0 0 30px 0;
+  padding: 0 0 5px 0;
 }
 
 span#hash::before {
   color: #fbbc04;
   content: 'hash';
-  top: 50px;
+  top: 25px;
 }
 
-span#search + span#hash {
+/* span#search + span#hash {
   border-bottom: 1px solid #fbbc04;
   padding: 0 0 30px 0;
 }
@@ -258,7 +258,7 @@ span#search + span#hash::before {
   color: #fbbc04;
   content: 'hash';
   top: 50px;
-}
+} */
 
 span#hostname {
   border-top: 1px solid #34a853;
