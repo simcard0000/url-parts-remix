@@ -76,13 +76,13 @@ function handleUrl() {
 
   //console.log('url', url);
 
-  const hash = url.hash.replaceAll('&','&amp;');
+  const hash = url.hash;
   const hostname = url.hostname;
   const origin = url.origin;
   const password = url.password;
   let pathname = url.pathname;
   const port = url.port;
-  const search = url.search.replaceAll('&','&amp;');
+  const search = url.search;
   const username = url.username;
 
   if (!hostname) {
@@ -233,6 +233,9 @@ function handleUrl() {
   if (hash) {
     replace(hash,
       `<span id="hash">#<span id="fragment">${hash.slice(1)}</span></span>`);
+    // Special handling for escaped characters
+    replace(hash.replaceAll('&','&amp;'),
+      `<span id="hash">#<span id="fragment">${hash.replaceAll('&','&amp;').slice(1)}</span></span>`);
   }
 
   // // TODO: surprisingly complex to get this to work with other URL parts!
@@ -240,6 +243,29 @@ function handleUrl() {
   // replace(`:${password}@`,
   // //     `:<span id="password">${password}</span>@`);
   // // }
+  
+  if (username) {
+    replace(username,
+      `<span id="username">${username}</span>`);
+    // Special handling for escaped characters
+    replace(username.replaceAll('%40','@'),
+      `<span id="username">${username.replaceAll('%40','@')}</span>`);
+    replace(username.replaceAll('%3A',':'),
+      `<span id="username">${username.replaceAll('%3A',':')}</span>`);
+  }
+  
+  if (password) {
+    if (password.includes('%40')) {
+      replace(password.replaceAll('%40','@'),
+        `<span id="password">${password.replaceAll('%40','@')}</span>`);
+    } else if (password.includes('%3A')) {
+      replace(password.replaceAll('%3A',':'),
+        `<span id="password">${password.replaceAll('%3A',':')}</span>`);
+    } else {
+      replace(password,
+        `<span id="password">${password}</span>`);
+    }
+  }
 
   if (port) {
     replace(`:${port}`,
@@ -256,22 +282,9 @@ function handleUrl() {
   if (search) {
     replace(search,
       `<span id="search">${search}</span>`);
-  }
-  
-  if (username) {
-    replace(username,
-      `<span id="username">${username}</span>`);
-    replace(username.replace('%40','@'),
-      `<span id="username">${username.replace('%40','@')}</span>`);
-  }
-  
-  if (password) {
-    replace(password,
-      `<span id="password">${password}</span>`);
-    replace(password.replace('%40','@'),
-      `<span id="password">${password.replace('%40','@')}</span>`);
-    replace(password.replace('%3A',':'),
-      `<span id="password">${password.replace('%3A',':')}</span>`);
+    // Special handling for escaped characters
+    replace(search.replaceAll('&','&amp;'),
+      `<span id="search">${search.replaceAll('&','&amp;')}</span>`);
   }
 }
 
