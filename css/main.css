@@ -349,6 +349,17 @@ span#port::before {
   top: 25px;
 }
 
+span#protocol {
+  border-bottom: 1px solid #4285f4;
+  padding: 0 0 30px 0;
+}
+
+span#protocol::before {
+  color: #4285f4;
+  content: 'protocol';
+  top: 50px;
+}
+
 span#scheme {
   border-bottom: 1px solid #4285f4;
   padding: 0 0 5px 0;

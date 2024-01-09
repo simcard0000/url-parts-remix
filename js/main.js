@@ -51,7 +51,7 @@ function handleUrl() {
   if (!urlText.match(/^[\w:\/\?#\.\@= %&;-]+$/i)) {
     urlPartsDiv.innerHTML =
       '😿 Sorry! Only ASCII for the moment.<br><br>' +
-      'We\'re working on supporting multiple search parameters, username:password, <br>' +
+      'We\'re working on supporting username:password, <br>' +
       'and providing <a href="https://github.com/mathiasbynens/punycode.js">' +
       'Punycode</a> support and non-ASCII in pathnames.';
     return;
@@ -79,11 +79,11 @@ function handleUrl() {
   const hash = url.hash.replaceAll('&','&amp;');
   const hostname = url.hostname;
   const origin = url.origin;
-  const password = url.password;
+  const password = url.password.replaceAll('@','%40');
   let pathname = url.pathname;
   const port = url.port;
   const search = url.search.replaceAll('&','&amp;');
-  const username = url.username;
+  const username = url.username.replaceAll('@','%40').replace(':','%3A');
 
   if (!hostname) {
     urlPartsDiv.innerHTML = '';
@@ -91,11 +91,11 @@ function handleUrl() {
   }
 
   // Adding support for username and password is more difficult than I thought :/.
-  if (username || password) {
-    console.log('username:', username, 'password:', password);
-    urlPartsDiv.innerHTML = 'Sorry! Can\'t handle URLs with username or password (yet).';
-    return;
-  }
+  // if (username || password) {
+  //   console.log('username:', username, 'password:', password);
+  //   urlPartsDiv.innerHTML = 'Sorry! Can\'t handle URLs with username or password (yet).';
+  //   return;
+  // }
 
   // urlText is a valid URL that can be handled here,
   // so update the `?url= ...` search string in the URL bar.
@@ -246,16 +246,26 @@ function handleUrl() {
       `:<span id="port">${port}</span>`);
   }
   if (scheme) {
-    replace(scheme,
+    replace(scheme + ':',
       // `<span id="scheme">${scheme}</span>`);
-      `<span id="scheme"><span id="origin-scheme"><span id="site-scheme">` +
-          `${scheme}</span></span></span>`);
+      `<span id="protocol"><span id="scheme"><span id="origin-scheme"><span id="site-scheme">` +
+          `${scheme}</span></span></span>:</span>`);
   }
   // If the URL has a hash value *and* a search string,
   // the URL API (for hash) returns the hash and the search string.
   if (search) {
     replace(search,
       `<span id="search">${search}</span>`);
+  }
+  
+  if (username) {
+    replace(username,
+      `<span id="username">${username}</span>`);
+  }
+  
+  if (password) {
+    replace(password,
+      `<span id="password">${password}</span>`);
   }
 }
 
