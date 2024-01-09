@@ -279,11 +279,11 @@ function handleUrl() {
   // the URL API (for hash) returns the hash and the search string.
   if (search) {
     replace(search,
-      `<span id="search">${search}</span>`);
+      `<span id="search">?<span id="query">${search.slice(1)}</span></span>`);
     // Special handling for escaped characters
     if (search.includes('&')) {
       replace(search.replaceAll('&','&amp;'),
-        `<span id="search">${search.replaceAll('&','&amp;')}</span>`);
+        `<span id="search">?<span id="query">${search.slice(1).replaceAll('&','&amp;')}</span></span>`);
     }
   }
 }

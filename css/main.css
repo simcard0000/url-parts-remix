@@ -371,6 +371,18 @@ span#scheme::before {
   top: 25px;
 }
 
+span#query {
+  border-top: 1px solid #fbbc04;
+  margin: 0 0 0 2px;
+  padding: 2px 0 0 0;
+}
+
+span#query::before {
+  color: #fbbc04;
+  content: 'query';
+  bottom: 25px;
+}
+
 span#search {
   border-bottom: 1px solid #fbbc04;
   margin: 0 0 0 2px;
