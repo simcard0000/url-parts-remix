@@ -249,6 +249,18 @@ span#search + span#hash::before {
   top: 50px;
 }
 
+span#text-fragment {
+  border-top: 1px solid #fbbc04;
+  margin: 0 0 0 2px;
+  padding: 27px 0 0 0;
+}
+
+span#text-fragment::before {
+  color: #fbbc04;
+  content: 'text fragment';
+  top: -50px;
+}
+
 span#fragment {
   border-top: 1px solid #fbbc04;
   margin: 0 0 0 2px;
@@ -259,17 +271,6 @@ span#fragment::before {
   color: #fbbc04;
   content: 'fragment';
   top: -25px;
-}
-
-span#search + span#fragment {
-  border-top: 1px solid #fbbc04;
-  padding: 0 0 30px 0;
-}
-
-span#search + span#fragment::before {
-  color: #fbbc04;
-  content: 'fragment';
-  top: -50px;
 }
 
 span#hostname {

@@ -239,6 +239,12 @@ function handleUrl() {
       replace(hash.replaceAll('&','&amp;'),
         `<span id="hash">#<span id="fragment">${hash.replaceAll('&','&amp;').slice(1)}</span></span>`);
     }
+    
+    if (hash.includes(':~:text=')) {
+      replace(':~:text=',
+        `:~:text=<span id="text-fragment">`);
+      replace(/$/, `</span>`);
+    }
   }
 
   // TODO: surprisingly complex to get this to work with other URL parts!  
