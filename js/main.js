@@ -48,7 +48,7 @@ function handleUrl() {
 
   // TODO: support username:password, 
   // and non-ASCII hostnames and pathnames.
-  if (!urlText.match(/^[\w:\/\?#\.\@= %&;~ \+-]+$/i)) {
+  if (!urlText.match(/^[\w:\/\?#\.\@= %&;~ '\+-]+$/i)) {
     urlPartsDiv.innerHTML =
       '😿 Sorry! Only ASCII for the moment.<br><br>' +
       'We\'re working on supporting username:password, <br>' +
@@ -242,7 +242,7 @@ function handleUrl() {
     
     if (hash.includes(':~:text=')) {
       replace(':~:text=',
-        `:~:text=<span id="text-fragment">`);
+        `<span id="text-fragment">:~:text=`);
       replace(/$/, `</span>`);
     }
   }
