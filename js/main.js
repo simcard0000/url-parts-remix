@@ -91,11 +91,12 @@ function handleUrl() {
   }
 
   // Adding support for username and password is more difficult than I thought :/.
-  // if (username || password) {
-  //   console.log('username:', username, 'password:', password);
-  //   urlPartsDiv.innerHTML = 'Sorry! Can\'t handle URLs with username or password (yet).';
-  //   return;
-  // }
+  // Besides they are very bad practice
+  if (username || password) {
+    console.log('username:', username, 'password:', password);
+    urlPartsDiv.innerHTML = 'Sorry! Can\'t handle URLs with username or password (yet).';
+    return;
+  }
 
   // urlText is a valid URL that can be handled here,
   // so update the `?url= ...` search string in the URL bar.
@@ -234,35 +235,35 @@ function handleUrl() {
     replace(hash,
       `<span id="hash">#<span id="fragment">${hash.slice(1)}</span></span>`);
     // Special handling for escaped characters
-    replace(hash.replaceAll('&','&amp;'),
-      `<span id="hash">#<span id="fragment">${hash.replaceAll('&','&amp;').slice(1)}</span></span>`);
+    if (hash.includes('&')) {
+      replace(hash.replaceAll('&','&amp;'),
+        `<span id="hash">#<span id="fragment">${hash.replaceAll('&','&amp;').slice(1)}</span></span>`);
+    }
   }
 
-  // // TODO: surprisingly complex to get this to work with other URL parts!
-  // // if (password) {
-  // replace(`:${password}@`,
-  // //     `:<span id="password">${password}</span>@`);
-  // // }
-  
-  if (username) {
-    replace(username,
-      `<span id="username">${username}</span>`);
-    // Special handling for escaped characters
-    if (username.includes('%40') || username.includes('%3A')) {
-      replace(username.replaceAll('%40','@').replaceAll('%3A',':'),
-        `<span id="username">${username.replaceAll('%40','@').replaceAll('%3A',':')}</span>`);
-    }
-  }
-  
-  if (password) {
-    replace(password,
-      `<span id="password">${password}</span>`);
-    // // Special handling for escaped characters
-    if (password.includes('%40') || password.includes('%3A')) {
-      replace(password.replaceAll('%40','@').replaceAll('%3A',':'),
-        `<span id="password">${password.replaceAll('%40','@').replaceAll('%3A',':')}</span>`);
-    }
-  }
+  // TODO: surprisingly complex to get this to work with other URL parts!  
+  //       For example: origin does not include username and password but includes scheme
+  //       Possible need a dashed thing, similar to site
+  //
+  //   if (username) {
+  //     replace(username,
+  //       `<span id="username">${username}</span>`);
+  //     // Special handling for escaped characters
+  //     if (username.includes('%40') || username.includes('%3A')) {
+  //       replace(username.replaceAll('%40','@').replaceAll('%3A',':'),
+  //         `<span id="username">${username.replaceAll('%40','@').replaceAll('%3A',':')}</span>`);
+  //     }
+  //   }
+
+  //   if (password) {
+  //     replace(password,
+  //       `<span id="password">${password}</span>`);
+  //     // // Special handling for escaped characters
+  //     if (password.includes('%40') || password.includes('%3A')) {
+  //       replace(password.replaceAll('%40','@').replaceAll('%3A',':'),
+  //         `<span id="password">${password.replaceAll('%40','@').replaceAll('%3A',':')}</span>`);
+  //     }
+  //   }
 
   if (port) {
     replace(`:${port}`,
@@ -280,8 +281,10 @@ function handleUrl() {
     replace(search,
       `<span id="search">${search}</span>`);
     // Special handling for escaped characters
-    replace(search.replaceAll('&','&amp;'),
-      `<span id="search">${search.replaceAll('&','&amp;')}</span>`);
+    if (search.includes('&')) {
+      replace(search.replaceAll('&','&amp;'),
+        `<span id="search">${search.replaceAll('&','&amp;')}</span>`);
+    }
   }
 }
 
