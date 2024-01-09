@@ -409,13 +409,13 @@ span#site-scheme {
 span#text-fragment {
   border-top: 1px solid #fbbc04;
   margin: 0 0 0 2px;
-  padding: 27px 0 0 0;
+  padding: 2px 0 0 0;
 }
 
 span#text-fragment::before {
   color: #fbbc04;
   content: 'text fragment';
-  top: -50px;
+  top: -25px;
 }
 
 span#tld {
